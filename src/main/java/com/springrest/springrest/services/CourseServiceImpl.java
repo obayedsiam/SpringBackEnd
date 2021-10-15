@@ -4,21 +4,14 @@ import com.springrest.springrest.dao.CourseDao;
 import com.springrest.springrest.entities.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-    // List<Course> list;
+
     @Autowired
     private CourseDao courseDao;
-
-    public CourseServiceImpl() {
-        //    list = new ArrayList<>();
-        //    list.add(new Course(12, "Java", "This is a Java Course"));
-        //    list.add(new Course(14, "React", "This is a React Course"));
-    }
 
     @Override
     public List<Course> getCourses() {
@@ -27,15 +20,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getCourse(long courseId) {
-
-
-     /*   Course c = null;
-        for (Course course : list)
-            if (course.getId() == courseId) {
-                c = course;
-                break;
-            }   */
-        return courseDao.getById(courseId);
+        return courseDao.findById(courseId).get();
     }
 
     @Override
@@ -58,13 +43,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public String deleteCourse(long courseId) {
-      /*  for (Course c : list)
-            if (c.getId() == courseId) {
-                list.remove(c);
-            }*/
+    public void deleteCourse(long courseId) {
         courseDao.delete(courseDao.getById(courseId));
-
-        return "Course Deleted";
     }
 }

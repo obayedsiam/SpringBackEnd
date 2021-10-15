@@ -1,7 +1,9 @@
 package com.springrest.springrest.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.springrest.springrest.entities.Course;
 import com.springrest.springrest.services.CourseService;
+import com.springrest.springrest.services.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,7 @@ import java.util.List;
 public class MyController {
 
     @Autowired
-    private CourseService service;
+    private CourseServiceImpl service;
 
     // Get List of courses
     @CrossOrigin
@@ -25,7 +27,9 @@ public class MyController {
     // Get Course with Id
     @CrossOrigin
     @GetMapping("/course/{courseId}")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     public Course getCourse(@PathVariable String courseId) {
+
         return this.service.getCourse(Long.parseLong(courseId));
     }
 
@@ -38,13 +42,13 @@ public class MyController {
 
     //Update course with Id
     @CrossOrigin
-    @PutMapping("course/{courseId}")
+    @PutMapping("/course/{courseId}")
     public Course updateCourse(@RequestBody Course course) {
         return this.service.updateCourse(course);
     }
 
     @CrossOrigin
-    @DeleteMapping("course/{courseId}")
+    @DeleteMapping("/course/{courseId}")
     public ResponseEntity<HttpStatus> deleteCourse(@PathVariable String courseId) {
         try {
             this.service.deleteCourse(Long.parseLong(courseId));
