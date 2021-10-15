@@ -1,6 +1,6 @@
 package com.springrest.springrest.services;
 
-import com.springrest.springrest.dao.CourseDao;
+import com.springrest.springrest.repository.CourseRepository;
 import com.springrest.springrest.entities.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,39 +11,32 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
-    private CourseDao courseDao;
+    private CourseRepository repository;
 
     @Override
     public List<Course> getCourses() {
-        return courseDao.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Course getCourse(long courseId) {
-        return courseDao.findById(courseId).get();
+        return repository.findById(courseId).get();
     }
 
     @Override
     public Course addCourse(Course course) {
-        //   list.add(course);
-        courseDao.save(course);
+        repository.save(course);
         return course;
     }
 
     @Override
     public Course updateCourse(Course course) {
-
-      /*  for (Course c : list)
-            if(c.getId()== course.getId()){
-               c.setTitle(course.getTitle()) ;
-               c.setDescription(course.getDescription());
-        }*/
-        courseDao.save(course);
+        repository.save(course);
         return course;
     }
 
     @Override
     public void deleteCourse(long courseId) {
-        courseDao.delete(courseDao.getById(courseId));
+        repository.delete(repository.getById(courseId));
     }
 }
