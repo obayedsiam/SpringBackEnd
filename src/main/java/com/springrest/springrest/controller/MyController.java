@@ -6,11 +6,13 @@ import com.springrest.springrest.services.CourseService;
 import com.springrest.springrest.services.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class MyController {
 
@@ -42,13 +44,13 @@ public class MyController {
 
     //Update course with Id
     @CrossOrigin
-    @PutMapping("/course/{courseId}")
+    @PutMapping("/course/edit/{courseId}")
     public Course updateCourse(@RequestBody Course course) {
         return this.service.updateCourse(course);
     }
 
     @CrossOrigin
-    @DeleteMapping("/course/{courseId}")
+    @DeleteMapping("/course/delete/{courseId}")
     public ResponseEntity<HttpStatus> deleteCourse(@PathVariable String courseId) {
         try {
             this.service.deleteCourse(Long.parseLong(courseId));
