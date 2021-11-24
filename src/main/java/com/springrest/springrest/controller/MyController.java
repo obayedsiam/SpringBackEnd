@@ -42,13 +42,13 @@ public class MyController {
 
     //Update course with Id
     @CrossOrigin
-    @PutMapping("/course/{courseId}")
+    @PutMapping("/course/edit/{courseId}")
     public Course updateCourse(@RequestBody Course course) {
         return this.service.updateCourse(course);
     }
 
     @CrossOrigin
-    @DeleteMapping("/course/{courseId}")
+    @DeleteMapping("/course/delete/{courseId}")
     public ResponseEntity<HttpStatus> deleteCourse(@PathVariable String courseId) {
         try {
             this.service.deleteCourse(Long.parseLong(courseId));
