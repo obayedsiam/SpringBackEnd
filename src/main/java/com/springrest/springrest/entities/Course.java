@@ -1,5 +1,6 @@
 package com.springrest.springrest.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,8 +11,13 @@ import javax.persistence.Table;
 public class Course {
 
     @Id
+    @Column (name = "id")
     private long id;
+
+    @Column (name = "title")
     private String title;
+
+    @Column (name = "description")
     private String description;
 
     public Course() {

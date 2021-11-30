@@ -37,6 +37,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void deleteCourse(long courseId) {
+       // String ret = "Course Deleted";
         repository.delete(repository.getById(courseId));
+   //    return ret;
     }
 }
