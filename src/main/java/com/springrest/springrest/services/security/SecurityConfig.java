@@ -29,10 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     private static final String[] SWAGGER = {
+            "/course/delete/*",
             "/course",
-            "/course/#",
-            "/course/edit/#",
-            "/course/delete/#",
+            "/course/edit/*",
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources/**",
@@ -46,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 /*    private final KeycloakAccessConverter keycloakAccessConverter;
 
+    /*
     private JwtAuthenticationConverter getJwtConverter() {
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
         converter.setJwtGrantedAuthoritiesConverter(keycloakAccessConverter);
@@ -63,15 +63,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
          /*       and()
+
+>>>>>>> c8e80c1b5db3e0a91367e49a1b12b775db1b3d84
                 .authorizeRequests()
                 .antMatchers(SWAGGER).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .oauth2ResourceServer()
+<<<<<<< HEAD
                 .jwt()
                 .jwtAuthenticationConverter(getJwtConverter());
     }*/
+
 
       @Override
        public void configure(WebSecurity web) throws Exception {

@@ -29,10 +29,18 @@ public class MyController {
     // Get Course with Id
     @CrossOrigin
     @GetMapping("/course/{courseId}")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     public Course getCourse(@PathVariable String courseId) {
 
+     //   System.out.printf("hello");
+
         return this.service.getCourse(Long.parseLong(courseId));
+    }
+
+    @GetMapping("/c/{id}")
+    public Course get(@PathVariable Long id){
+        System.out.println("hi");
+        return this.service.getCourse(id);
     }
 
     // Add Course
