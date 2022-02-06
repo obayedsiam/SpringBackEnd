@@ -72,9 +72,9 @@ public class Helper {
                             break;
                         case 2:
                             if(cell.getCellType()== CellType.STRING)
-                                tvDetails.setDate(cell.getDateCellValue());
+                                tvDetails.setDate(cell.getLocalDateTimeCellValue().toLocalDate());
                             else if(cell.getCellType()==CellType.NUMERIC)
-                                tvDetails.setDate(cell.getDateCellValue());
+                                tvDetails.setDate(cell.getLocalDateTimeCellValue().toLocalDate());
 
                             break;
                         case 3:

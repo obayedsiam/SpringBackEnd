@@ -1,6 +1,7 @@
 package com.springrest.springrest.exporter;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -54,8 +55,8 @@ public class UserExcelExporter {
             cell.setCellValue((Boolean) value);
         }else if (value instanceof Long) {
             cell.setCellValue((Long) value);
-        }else if (value instanceof Date) {
-            cell.setCellValue((Date) value);
+        }else if (value instanceof LocalDate) {
+            cell.setCellValue((LocalDate) value);
         }
         else {
             cell.setCellValue((String) value);

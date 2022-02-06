@@ -49,7 +49,7 @@ public class SonyTvServiceImpl implements SonyTvService {
     }
 
     @Override
-    public List<TvDetails> getListByDate(Date date) {
+    public List<TvDetails> getListByDate(LocalDate date) {
         return repository.findByDate(date);
     }
 
@@ -75,16 +75,16 @@ public class SonyTvServiceImpl implements SonyTvService {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
         LocalDate localDate  = LocalDate.now();
-        Date today = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+    //    Date today = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
         TvDetails tv = new TvDetails();
         ArrayList <TvDetails> list = new ArrayList<TvDetails>(10);
 
 
         for(int i=days; i>0;i--)
         {
-            list.addAll(repository.findByDate(today));
+            list.addAll(repository.findByDate(localDate));
             localDate = localDate.minusDays(1);
-            today = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+          //  localDate = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
 
         }
         return list;

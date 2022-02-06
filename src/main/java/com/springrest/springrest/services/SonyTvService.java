@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface SonyTvService {
     public TvDetails getTvDetails(long id);
     public TvDetails addTvDetails(TvDetails tvDetails);
     public TvDetails updateTvDetails(TvDetails tvDetails);
-    public List<TvDetails> getListByDate(Date date);
+    public List<TvDetails> getListByDate(LocalDate date);
     public List<TvDetails> getListByCallStatus(String callStatus);
     public List<TvDetails> getListByMobileNumber(String mobileNumber);
     public List<TvDetails> getListBySerialNumber(String serialNumber);

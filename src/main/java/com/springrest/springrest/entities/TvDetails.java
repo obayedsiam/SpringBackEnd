@@ -2,8 +2,10 @@ package com.springrest.springrest.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -28,13 +30,13 @@ public class TvDetails {
 
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column (name = "date_created")
-    private Date date;
+    private LocalDate date;
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -43,7 +45,7 @@ public class TvDetails {
         super();
     }
 
-    public TvDetails(String mobileNumber, String serialNumber, String callStatus, Date dateCreated) {
+    public TvDetails(String mobileNumber, String serialNumber, String callStatus, LocalDate dateCreated) {
         this.mobileNumber = mobileNumber;
         this.serialNumber = serialNumber;
         this.callStatus = callStatus;

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class SonyTvController {
     @CrossOrigin
     @GetMapping("/getList/date/{date}")
     public List<TvDetails> getListByDate(@PathVariable String date) throws ParseException {
-        Date newDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        LocalDate newDate = LocalDate.parse(date);
         return this.service.getListByDate(newDate);
     }
 
@@ -109,6 +110,7 @@ public class SonyTvController {
         return this.service.updateTvDetails(tvDetails);
     }
 
+    @CrossOrigin
     @GetMapping("/users/export/excel")
     public void exportToExcel(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
