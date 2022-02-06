@@ -1,5 +1,6 @@
 package com.springrest.springrest.controller;
 
+import com.springrest.springrest.entities.Search;
 import com.springrest.springrest.entities.TvDetails;
 import com.springrest.springrest.exporter.UserExcelExporter;
 import com.springrest.springrest.helper.Helper;
@@ -112,7 +113,8 @@ public class SonyTvController {
 
     @CrossOrigin
     @GetMapping("/users/export/excel")
-    public void exportToExcel(HttpServletResponse response) throws IOException {
+    public void exportToExcel(HttpServletResponse response, @RequestParam(value = "searchUrl", defaultValue = "null") String searchUrl,
+                              @RequestParam(value = "searchValue", defaultValue = "") String searchValue) throws IOException, JRException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -121,7 +123,23 @@ public class SonyTvController {
         String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-        List<TvDetails> tvDetails = service.getTvDetails();
+        List<TvDetails> tvDetails;
+
+        switch(searchUrl){
+            case "/getList/serial/":    tvDetails= service.getListBySerialNumber(searchValue);
+                break;
+            case "/getList/mobile/":    tvDetails= service.getListByMobileNumber(searchValue);
+                break;
+            case "/getList/callStatus/": tvDetails= service.getListByCallStatus(searchValue);
+                break;
+            case "/getListForLast/": tvDetails= service.getListForLast(Integer.parseInt(searchValue));
+                break;
+                case "/getList/date/": tvDetails= service.getListByDate(LocalDate.parse(searchValue));
+                    break;
+            default :tvDetails= service.getTvDetails();
+                break;
+        }
+
 
         UserExcelExporter excelExporter = new UserExcelExporter(tvDetails);
 
