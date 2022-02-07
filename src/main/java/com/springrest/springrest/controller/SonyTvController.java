@@ -1,12 +1,13 @@
 package com.springrest.springrest.controller;
 
-import com.springrest.springrest.entities.Search;
 import com.springrest.springrest.entities.TvDetails;
 import com.springrest.springrest.exporter.UserExcelExporter;
 import com.springrest.springrest.helper.Helper;
 import com.springrest.springrest.services.SonyTvServiceImpl;
+import com.springrest.springrest.services.TvDetailsPaginationService;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,9 @@ public class SonyTvController {
     @Autowired
     private SonyTvServiceImpl service;
 
+    @Autowired
+    private TvDetailsPaginationService service2;
+
     //Upload a file containing data
     @PostMapping("/TvDetails/upload")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
@@ -45,7 +49,6 @@ public class SonyTvController {
     }
 
 
-
     // Get All Lists
     @CrossOrigin
     @GetMapping("/TvDetails")
@@ -56,8 +59,7 @@ public class SonyTvController {
     // Get TvDetails with id
     @CrossOrigin
     @GetMapping("/getList/id/{id}")
-    public TvDetails getTvDetails(@PathVariable long id)
-    {
+    public TvDetails getTvDetails(@PathVariable long id) {
         return this.service.getTvDetails(id);
     }
 
@@ -71,22 +73,30 @@ public class SonyTvController {
 
     @CrossOrigin
     @GetMapping("/getList/mobile/{mobileNumber}")
-    public List<TvDetails> getListByMobile(@PathVariable String mobileNumber)
-    {
+    public List<TvDetails> getListByMobile(@PathVariable String mobileNumber) {
         return this.service.getListByMobileNumber(mobileNumber);
     }
 
     @CrossOrigin
     @GetMapping("/getList/callStatus/{callStatus}")
-    public List<TvDetails> getListByCallStatus(@PathVariable String callStatus)
-    {
+    public List<TvDetails> getListByCallStatus(@PathVariable String callStatus) {
         return this.service.getListByCallStatus(callStatus);
     }
 
     @CrossOrigin
+    @GetMapping("/getListByAny")
+    public List<TvDetails> getListBy(@RequestParam(value = "serial", defaultValue = "") String serial,
+                                     @RequestParam(value = "mobile", defaultValue = "") String mobile,
+                                     @RequestParam(value = "callStatus", defaultValue = "") String callStatus,
+                                     @RequestParam(value = "date", defaultValue = "") LocalDate date) {
+
+        return this.service.getListByAny(serial, mobile, callStatus, date);
+    }
+
+
+    @CrossOrigin
     @GetMapping("/getList/serial/{serialNumber}")
-    public List<TvDetails> getListBySerialNumber(@PathVariable String serialNumber)
-    {
+    public List<TvDetails> getListBySerialNumber(@PathVariable String serialNumber) {
         return this.service.getListBySerialNumber(serialNumber);
     }
 
@@ -125,18 +135,24 @@ public class SonyTvController {
 
         List<TvDetails> tvDetails;
 
-        switch(searchUrl){
-            case "/getList/serial/":    tvDetails= service.getListBySerialNumber(searchValue);
+        switch (searchUrl) {
+            case "/getList/serial/":
+                tvDetails = service.getListBySerialNumber(searchValue);
                 break;
-            case "/getList/mobile/":    tvDetails= service.getListByMobileNumber(searchValue);
+            case "/getList/mobile/":
+                tvDetails = service.getListByMobileNumber(searchValue);
                 break;
-            case "/getList/callStatus/": tvDetails= service.getListByCallStatus(searchValue);
+            case "/getList/callStatus/":
+                tvDetails = service.getListByCallStatus(searchValue);
                 break;
-            case "/getListForLast/": tvDetails= service.getListForLast(Integer.parseInt(searchValue));
+            case "/getListForLast/":
+                tvDetails = service.getListForLast(Integer.parseInt(searchValue));
                 break;
-                case "/getList/date/": tvDetails= service.getListByDate(LocalDate.parse(searchValue));
-                    break;
-            default :tvDetails= service.getTvDetails();
+            case "/getList/date/":
+                tvDetails = service.getListByDate(LocalDate.parse(searchValue));
+                break;
+            default:
+                tvDetails = service.getTvDetails();
                 break;
         }
 
@@ -159,6 +175,15 @@ public class SonyTvController {
         }
     }
 
+    @GetMapping("/customer")
+    public ResponseEntity<List<TvDetails>> getAllCustomer(
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize) {
 
+        List<TvDetails> list = service2.getAllTvDetails(pageNo, pageSize);
 
+        return new ResponseEntity<List<TvDetails>>(list, new HttpHeaders(), HttpStatus.OK);
+    }
 }
+
+

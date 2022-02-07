@@ -69,6 +69,14 @@ public class SonyTvServiceImpl implements SonyTvService {
     }
 
 
+    @Override
+    public List<TvDetails> getListByAny(String serial, String mobile, String callStatus, LocalDate date ) {
+
+        return repository.find(serial, mobile, callStatus, date);
+    }
+
+
+
 
     @Override
     public List<TvDetails> getListForLast(int days) throws FileNotFoundException, JRException {
