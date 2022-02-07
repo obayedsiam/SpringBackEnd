@@ -25,7 +25,28 @@ public interface TvDetailsRepository extends JpaRepository<TvDetails,Long> {
             "(:callStatus != '' and e.callStatus = :callStatus) and " +
             "(:date != '' and e.date = :date)";
 
-    @Query (var)
+    /*@Query ("select e from TvDetails as e where " +
+            "(:serialNumber != '' and e.serialNumber = :serialNumber) and " +
+            "(:mobileNumber != '' and e.mobileNumber = :mobileNumber) and " +
+            "(:callStatus != '' and e.callStatus = :callStatus) and " +
+            "(:date != '' and e.date = :date)")
+
+    @Query("SELECT s FROM Student s JOIN s.studentAttendanceView v WHERE " +
+            "LOWER(s.studentName) LIKE LOWER(CONCAT('%', :studentName, '%')) AND " +
+            "LOWER(s.crvsId) LIKE LOWER(CONCAT('%', :crvsId, '%')) AND " +
+            "(:sectionId IS NULL OR v.sectionId = :sectionId) AND " +
+            "(:groupId IS NULL OR v.groupId = :groupId) AND " +
+            "(:versionId IS NULL OR v.versionId = :versionId) AND " +
+            "(:classId IS NULL OR v.academicClassId = :classId) AND " +
+            "(:studentId IS NULL OR v.studentId = :studentId) AND " +
+            "((:startDate IS NULL AND :endDate IS NULL) OR v.date BETWEEN :startDate AND :endDate)")
+    */
+
+    @Query("SELECT s FROM TvDetails s WHERE " +
+            "(:serialNumber IS NULL OR s.serialNumber = :serialNumber) AND " +
+            "(:mobileNumber IS NULL OR s.mobileNumber = :mobileNumber) AND " +
+            "(:callStatus IS NULL OR s.callStatus = :callStatus) AND " +
+            "(:date IS NULL  OR s.date = :date)")
     public List<TvDetails> find(@Param("serialNumber") String serialNumber, @Param("mobileNumber") String mobileNumber, @Param("callStatus") String callStatus, @Param("date") LocalDate date);
 
 

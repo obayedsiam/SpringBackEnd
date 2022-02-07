@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,7 +17,7 @@ public interface SonyTvService {
 
     List<TvDetails> getTvDetails();
 
-    List<TvDetails> getListByAny(String m, String c, String s, LocalDate d);
+    List<TvDetails> getListByAny(String m, String c, String s, Date d);
 
     TvDetails getTvDetails(long id);
 
@@ -24,7 +25,7 @@ public interface SonyTvService {
 
     TvDetails updateTvDetails(TvDetails tvDetails);
 
-    List<TvDetails> getListByDate(LocalDate date);
+    List<TvDetails> getListByDate(Date date);
 
     List<TvDetails> getListByMobileNumber(String mobileNumber);
 
