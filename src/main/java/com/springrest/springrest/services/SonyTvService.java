@@ -17,7 +17,7 @@ public interface SonyTvService {
 
     List<TvDetails> getTvDetails();
 
-    List<TvDetails> getListByAny(String m, String c, String s, Date d);
+    List<TvDetails> getListByAny(String m, String c, String s, LocalDate d);
 
     TvDetails getTvDetails(long id);
 
@@ -25,7 +25,7 @@ public interface SonyTvService {
 
     TvDetails updateTvDetails(TvDetails tvDetails);
 
-    List<TvDetails> getListByDate(Date date);
+    List<TvDetails> getListByDate(LocalDate date);
 
     List<TvDetails> getListByMobileNumber(String mobileNumber);
 

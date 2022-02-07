@@ -1,25 +1,19 @@
 package com.springrest.springrest.services;
 
+import com.springrest.springrest.entities.TvDetails;
 import com.springrest.springrest.helper.Helper;
 import com.springrest.springrest.repository.TvDetailsRepository;
-import com.springrest.springrest.entities.TvDetails;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
-
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.ZoneId;
-import java.util.*;
-
-
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -39,8 +33,6 @@ public class SonyTvServiceImpl implements SonyTvService {
         }
 
     }
-
-
 
 
     @Override
@@ -70,35 +62,32 @@ public class SonyTvServiceImpl implements SonyTvService {
 
 
     @Override
-    public List<TvDetails> getListByAny(String serial, String mobile, String callStatus, LocalDate date ) {
+    public List<TvDetails> getListByAny(String serial, String mobile, String callStatus, LocalDate date) {
 
         return repository.find(serial, mobile, callStatus, date);
     }
-
-
 
 
     @Override
     public List<TvDetails> getListForLast(int days) throws FileNotFoundException, JRException {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
-        LocalDate localDate  = LocalDate.now();
-    //    Date today = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+        LocalDate localDate = LocalDate.now();
+        //    Date today = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
         TvDetails tv = new TvDetails();
-        ArrayList <TvDetails> list = new ArrayList<TvDetails>(10);
+        ArrayList<TvDetails> list = new ArrayList<TvDetails>(10);
 
 
-        for(int i=days; i>0;i--)
-        {
+        for (int i = days; i > 0; i--) {
             list.addAll(repository.findByDate(localDate));
             localDate = localDate.minusDays(1);
-          //  localDate = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+            //  localDate = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
 
         }
         return list;
     }
 
-  @Override
+    @Override
     public TvDetails getTvDetails(long id) {
         return repository.findById(id).get();
     }

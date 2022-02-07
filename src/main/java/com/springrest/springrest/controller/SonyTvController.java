@@ -5,7 +5,6 @@ import com.springrest.springrest.exporter.UserExcelExporter;
 import com.springrest.springrest.helper.Helper;
 import com.springrest.springrest.services.SonyTvServiceImpl;
 import com.springrest.springrest.services.TvDetailsPaginationService;
-import lombok.extern.java.Log;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +20,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +68,7 @@ public class SonyTvController {
     @CrossOrigin
     @GetMapping("/getList/date/{date}")
     public List<TvDetails> getListByDate(@PathVariable String date) throws ParseException {
-        Date newDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        LocalDate newDate = LocalDate.parse(date);
         return this.service.getListByDate(newDate);
     }
 
@@ -91,7 +89,7 @@ public class SonyTvController {
     public List<TvDetails> getListBy(@RequestParam(value = "serial", defaultValue = "") String serial,
                                      @RequestParam(value = "mobile", defaultValue = "") String mobile,
                                      @RequestParam(value = "callStatus", defaultValue = "") String callStatus,
-                                     @RequestParam(value = "date", defaultValue = "") Date date) {
+                                     @RequestParam(value = "date", defaultValue = "") LocalDate date) {
 
         List<TvDetails> tv = this.service.getListByAny(serial, mobile, callStatus, date);
         System.out.println(tv.size());
@@ -129,7 +127,7 @@ public class SonyTvController {
     @CrossOrigin
     @GetMapping("/users/export/excel")
     public void exportToExcel(HttpServletResponse response, @RequestParam(value = "searchUrl", defaultValue = "null") String searchUrl,
-                              @RequestParam(value = "searchValue", defaultValue = "") String searchValue) throws IOException, JRException, ParseException {
+                              @RequestParam(value = "searchValue", defaultValue = "") String searchValue) throws IOException, JRException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -154,8 +152,7 @@ public class SonyTvController {
                 tvDetails = service.getListForLast(Integer.parseInt(searchValue));
                 break;
             case "/getList/date/":
-                Date date=new SimpleDateFormat("dd/MM/yyyy").parse(searchValue);
-                tvDetails = service.getListByDate(date);
+                tvDetails = service.getListByDate(LocalDate.parse(searchValue));
                 break;
             default:
                 tvDetails = service.getTvDetails();
